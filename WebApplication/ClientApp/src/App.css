@@ -1,0 +1,100 @@
+#divAdd{
+  display: none;
+  margin-left: 10px;
+}
+
+#buttonAdd{
+  margin-left: 10px;
+}
+
+#botonF1{
+	position: relative;
+	display: block;
+	padding: 20px 10px;
+	border-radius: 6px;
+	text-align: center;
+	font-weight: bold;
+  max-width: 120px;
+	margin-bottom: 60px;
+	overflow: hidden;
+	color:rgb(177, 5, 5);
+	cursor: pointer;
+	letter-spacing: 2px;
+	box-shadow:inset 0 0 0 1px rgba(0,0,0,0.1);
+	text-decoration: none;
+	transition: all ease 0.5s;
+	background:#10B87B;
+}
+ 
+#botonF1:after,
+#botonF1:before{
+	width: 80px;
+	height: 200px;
+	content: '';
+	display: block;
+	background: rgba(255,255,255,0.5);
+	transform: rotate(45deg);
+	top: -60px;
+	position: absolute;
+	transition: none;
+	right:-45%;
+	cursor: pointer;
+}
+ 
+#botonF1:before{
+	left: -48%;
+}
+ 
+#botonF1:hover{
+	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+	background:#12C987
+}
+ 
+#botonF1:hover:after,
+#botonF1:hover:before{
+	transform: rotate(45deg), scaleX(130%);
+	background: rgba(255,255,255,0.1);
+	transition: all ease 0.5s;
+}
+ 
+#botonF1:hover:after{
+	right: 130%;
+}
+ 
+#botonF1:hover:before{
+	left: 130%;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
