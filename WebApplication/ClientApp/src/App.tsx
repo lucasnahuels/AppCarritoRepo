@@ -11,16 +11,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import SearchAppBar from './toolbar';
-import Icon from '@material-ui/core/Icon';
-import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
-import UpdateIcon from '@material-ui/icons/Update';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import EditIcon from '@material-ui/icons/Edit';
+import Modal from '@material-ui/core/Modal';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import SimpleModal from './modal';
 
 interface IState {
  listOfProducts : Product[];
  buttonName : string;
- isHidden : boolean;
+//  isHidden : boolean;
 }
 
 interface IProps {
@@ -28,14 +29,16 @@ interface IProps {
 
 class App extends Component<IProps, IState> {
 
-  private productData : Product = new Product; 
+  // private productData : Product = new Product; 
+
+  showModal = false;
 
   constructor(props : IProps){
     super(props)
     this.state = {
       listOfProducts : [],
       buttonName : "Add new product",
-      isHidden : false
+      // isHidden : false
     }
   }
 
@@ -46,21 +49,22 @@ class App extends Component<IProps, IState> {
       });
   }
 
-  AddProduct(){
-    //llenar productData
-    axios.post('https://localhost:44362/api/v1/product', this.productData)
-  }
+  // AddProduct(){
+  //   //llenar productData
+  //   axios.post('https://localhost:44362/api/v1/product', this.productData)
+  // }
 
   ShowForm(){
-    document.getElementById("divAdd")!.style.display = "block"; //The ! means "trust me, this is not a null reference"
-    this.setState({buttonName : "Cancel"}); 
-    this.setState({isHidden : true});
+    // document.getElementById("divAdd")!.style.display = "block"; //The ! means "trust me, this is not a null reference"
+    this.setState({buttonName : "Cancel"}); debugger;
+    // this.setState({isHidden : true});
+    this.showModal = true;
   }
   
   HideForm(){
-    document.getElementById("divAdd")!.style.display = "none"; //The ! means "trust me, this is not a null reference"
+    // document.getElementById("divAdd")!.style.display = "none"; //The ! means "trust me, this is not a null reference"
     this.setState({buttonName : "Add new product"});
-    this.setState({isHidden : false});
+    // this.setState({isHidden : false});
   }
 
 
@@ -68,13 +72,18 @@ class App extends Component<IProps, IState> {
     return (
       <React.Fragment>
         <SearchAppBar></SearchAppBar>
-        <DialogTitle>List of products</DialogTitle>
+       
+        <div>
+          <DialogTitle id="dialogTitle">List of products</DialogTitle>
+           <Button variant="contained" color="primary" id="buttonAdd" onClick={() => this.ShowForm()}> {this.state.buttonName} <AddCircleIcon/> </Button> 
+        </div>
 
         <Table size="medium">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Price</TableCell>
+              <TableCell size="medium">Name</TableCell>
+              <TableCell size="medium">Price</TableCell>
+              <TableCell size="medium">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -82,14 +91,18 @@ class App extends Component<IProps, IState> {
               <TableRow key= {`${product.name}_${product.price}`}>
                 <TableCell>{product.name} </TableCell>
                 <TableCell>{product.price}</TableCell>
-                <TableCell><Button variant="contained" color="default">Update<UpdateIcon/></Button></TableCell>
-                <TableCell><Button variant="contained" color="secondary">Delete<DeleteIcon/></Button>  </TableCell>
+                <TableCell>
+                  <Button variant="contained" color="default"><EditIcon/></Button>
+                  <Button variant="contained" color="secondary"><DeleteIcon/></Button> 
+                </TableCell>
               </TableRow>
             ))}
             </TableBody>
         </Table>
 
-        <br/>
+        <SimpleModal show={this.showModal} /> 
+
+        {/* <br/>
         <br/>
 
         {!this.state.isHidden ? (
@@ -98,15 +111,7 @@ class App extends Component<IProps, IState> {
           <Button variant="contained" color="primary" id="buttonAdd" onClick={() => this.HideForm()}> {this.state.buttonName} </Button> 
           )
         }
-
-        <br/><br/>
-          <div id="divAdd">
-              <TextField label="Name" name="inputName" placeholder="input the name" />
-              <br/><br/>
-              <TextField label="Price" name="inputPrice" placeholder="input the price"/>
-              <br/><br/>
-              <Button variant="contained" color="default" onClick={this.AddProduct}>Save</Button>
-          </div>
+        */}
       </React.Fragment>
     );
   }
