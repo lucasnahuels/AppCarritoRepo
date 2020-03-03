@@ -7,6 +7,8 @@ namespace Domain.Model
 {
     public class CategoryViewModel
     {
+        public int CategoryId { get; set; }
+
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$", ErrorMessage = "Name must be string")]
         [StringLength(50)]
         public string Name { get; set; }

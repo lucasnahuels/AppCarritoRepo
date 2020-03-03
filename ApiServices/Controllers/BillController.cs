@@ -52,6 +52,8 @@ namespace ApiServices.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] BillViewModel vm)
         {
+            if (!ModelState.IsValid) return BadRequest();
+
             var billMapped = _mapper.Map<Bill>(vm);
 
             _dbContext.Bills.Add(billMapped);

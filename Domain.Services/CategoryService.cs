@@ -48,5 +48,10 @@ namespace Domain.Services
         {
             return _categoryRepository.GetByIdFull(id);
         }
+
+        public void NicoGato()
+        {
+
+        }
     }
 }

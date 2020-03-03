@@ -53,6 +53,8 @@ namespace ApiServices.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] CategoryViewModel vm)
         {
+            if (!ModelState.IsValid) return BadRequest();
+
             var categoryMapped = _mapper.Map<Category>(vm);
 
             var category = _categoryService.Create(categoryMapped);

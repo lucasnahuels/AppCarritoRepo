@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,35 +7,41 @@ import InputBase from '@material-ui/core/InputBase';
 import { createStyles, fade, Theme, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import { Button } from '@material-ui/core';
+import WhoAreWeModal from './whoAreWeModal';
+import FilteredProducts from './products/products-list/filtered-products';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    buttonModal: {
+      marginLeft: 0
+    },
     root: {
-      flexGrow: 1,
+      flexGrow: 1
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginRight: theme.spacing(2)
     },
     title: {
       flexGrow: 1,
       display: 'none',
       [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
+        display: 'block'
+      }
     },
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
       '&:hover': {
-        backgroundColor: fade(theme.palette.common.white, 0.25),
+        backgroundColor: fade(theme.palette.common.white, 0.25)
       },
       marginLeft: 0,
       width: '100%',
       [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(1),
-        width: 'auto',
-      },
+        width: 'auto'
+      }
     },
     searchIcon: {
       width: theme.spacing(7),
@@ -44,10 +50,10 @@ const useStyles = makeStyles((theme: Theme) =>
       pointerEvents: 'none',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     },
     inputRoot: {
-      color: 'inherit',
+      color: 'inherit'
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 7),
@@ -56,42 +62,73 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('sm')]: {
         width: 120,
         '&:focus': {
-          width: 200,
-        },
-      },
-    },
-  }),
+          width: 200
+        }
+      }
+    }
+  })
 );
 
-export default function SearchAppBar() {
+export default function SearchAppBar () {
   const classes = useStyles();
+  const [showWhoAreWeModal, setshowWhoAreWeModal] = React.useState(false);
+  const [anchorElMenu, setAnchorElMenu] = React.useState<null | HTMLElement>(null); //entre <> se le indica el tipo
+  const [SearchField, setSearchState] = React.useState('');
+
+  const showModal = () => {
+    setshowWhoAreWeModal(true);
+  };
+
+  const hideForm = () => {
+    setshowWhoAreWeModal(false);
+  }
+
+  const handleClickOpenMenu = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setAnchorElMenu(event.currentTarget);
+  }
+
+  const handleCloseOpenMenu = () => {
+    setAnchorElMenu(null);
+  }
+
+  const handleInputSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchState(e.target.value); // : asignacion
+  }
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
           <IconButton
-            edge="start"
+            edge='start'
             className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
+            color='inherit'
+            aria-label='open drawer'
+            onClick={handleClickOpenMenu}
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            App Carrito by Lucas and NicoG
+
+          <FilteredProducts anchorElMenu={anchorElMenu} handleCloseOpenMenu={handleCloseOpenMenu}/>
+
+          <Typography className={classes.title} variant='h6' noWrap>
+            Lucas and NicoG Enterprises
           </Typography>
+          <Button className={classes.buttonModal} onClick={() => showModal()}>Who are we?</Button>
+          <WhoAreWeModal show={showWhoAreWeModal} hideModal={hideForm} />
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder='Search product'
               classes={{
                 root: classes.inputRoot,
-                input: classes.inputInput,
+                input: classes.inputInput
               }}
               inputProps={{ 'aria-label': 'search' }}
+              value={SearchField}
+              onChange={handleInputSearchChange}
             />
           </div>
         </Toolbar>

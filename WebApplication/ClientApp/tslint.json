@@ -1,10 +1,11 @@
-// {
-//     "extends": [],
-//     "defaultSeverity": "warning",
-//         "linterOptions": {
-//         "exclude": [
-//             "config/**/*.js",
-//             "node_modules/**/*.ts"
-//         ]
-//         }
-// }
+{
+    "extends": "tslint-config-standard",
+    "rules": {
+        "semicolon": false,
+        "no-floating-promises": false,
+        "ter-indent": false,
+        "comment-format": false,
+        "no-unused-expression":false,
+        "strict-type-predicates":false
+    }
+}

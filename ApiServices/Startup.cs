@@ -80,7 +80,9 @@ namespace ApiServices
                 app.UseHsts();
             }
 
-            app.UseCors("Default");
+            app.UseCors((builder) => builder.WithOrigins("https://localhost:44338").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            //.AllowAnyMethod().AllowAnyMethod().AllowAnyOrigin());
+
             app.UseSwaggerDocuments();
             app.UseHttpsRedirection();
             app.UseStaticFiles();

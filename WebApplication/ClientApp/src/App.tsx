@@ -1,117 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
-import axios from 'axios';
-import { Product } from './entities/product';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import SearchAppBar from './toolbar';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import EditIcon from '@material-ui/icons/Edit';
-import Modal from '@material-ui/core/Modal';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import SimpleModal from './modal';
+import ProductsList from './products/products-list';
 
-interface IState {
- listOfProducts : Product[];
- buttonName : string;
-//  isHidden : boolean;
-}
-
-interface IProps {
-}
-
-class App extends Component<IProps, IState> {
-
-  // private productData : Product = new Product; 
-
-  showModal = false;
-
-  constructor(props : IProps){
-    super(props)
-    this.state = {
-      listOfProducts : [],
-      buttonName : "Add new product",
-      // isHidden : false
-    }
-  }
-
-  componentDidMount() {
-    axios.get('https://localhost:44362/api/v1/product')
-      .then(response => {
-        this.setState({listOfProducts: response.data})
-      });
-  }
-
-  // AddProduct(){
-  //   //llenar productData
-  //   axios.post('https://localhost:44362/api/v1/product', this.productData)
-  // }
-
-  ShowForm(){
-    // document.getElementById("divAdd")!.style.display = "block"; //The ! means "trust me, this is not a null reference"
-    this.setState({buttonName : "Cancel"}); debugger;
-    // this.setState({isHidden : true});
-    this.showModal = true;
-  }
-  
-  HideForm(){
-    // document.getElementById("divAdd")!.style.display = "none"; //The ! means "trust me, this is not a null reference"
-    this.setState({buttonName : "Add new product"});
-    // this.setState({isHidden : false});
-  }
-
+class App extends Component {
 
   render() {
     return (
       <React.Fragment>
-        <SearchAppBar></SearchAppBar>
-       
-        <div>
-          <DialogTitle id="dialogTitle">List of products</DialogTitle>
-           <Button variant="contained" color="primary" id="buttonAdd" onClick={() => this.ShowForm()}> {this.state.buttonName} <AddCircleIcon/> </Button> 
-        </div>
-
-        <Table size="medium">
-          <TableHead>
-            <TableRow>
-              <TableCell size="medium">Name</TableCell>
-              <TableCell size="medium">Price</TableCell>
-              <TableCell size="medium">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.state.listOfProducts.map(product => (
-              <TableRow key= {`${product.name}_${product.price}`}>
-                <TableCell>{product.name} </TableCell>
-                <TableCell>{product.price}</TableCell>
-                <TableCell>
-                  <Button variant="contained" color="default"><EditIcon/></Button>
-                  <Button variant="contained" color="secondary"><DeleteIcon/></Button> 
-                </TableCell>
-              </TableRow>
-            ))}
-            </TableBody>
-        </Table>
-
-        <SimpleModal show={this.showModal} /> 
-
-        {/* <br/>
-        <br/>
-
-        {!this.state.isHidden ? (
-          <Button variant="contained" color="primary" id="buttonAdd" onClick={() => this.ShowForm()}> {this.state.buttonName} <AddCircleIcon/> </Button> 
-          ) : (
-          <Button variant="contained" color="primary" id="buttonAdd" onClick={() => this.HideForm()}> {this.state.buttonName} </Button> 
-          )
-        }
-        */}
+        
+        <SearchAppBar />
+        <ProductsList />
+        
       </React.Fragment>
     );
   }

@@ -2,16 +2,6 @@
   display: none;
   margin-left: 10px;
 } */
-#dialogTitle{
-  float: left;
-}
-
-#buttonAdd{
-  float: right;
-  margin: 15px;
-  margin-right: 25px;
-}
-
 .App {
   text-align: center;
 }

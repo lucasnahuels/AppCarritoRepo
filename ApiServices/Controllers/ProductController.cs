@@ -46,6 +46,7 @@ namespace ApiServices.Controllers
             
             var productMapped = _mapper.Map<ReadProductViewModel>(product);
 
+            if (product.Category != null)
             productMapped.CategoryName = product.Category.Name;
 
             return Ok(productMapped);
@@ -55,15 +56,15 @@ namespace ApiServices.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] CreateProductViewModel vm)
         {
-            //if (!ModelState.IsValid) return BadRequest(); //?????????????????????????
+            if (!ModelState.IsValid) return BadRequest(); //?????????????????????????
 
-            Category category = _categoryService.Get(vm.CategoryId);
+            //Category category = _categoryService.Get(vm.CategoryId);
 
-            if (category == null) return BadRequest();
+            //if (category == null) return BadRequest();
 
             var productMapped = _mapper.Map<Product>(vm);
 
-            productMapped.Category = category;
+            //productMapped.Category = category;
 
             Product product = _productService.Create(productMapped);
             
